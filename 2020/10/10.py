@@ -4,7 +4,7 @@ from itertools import groupby
 adapters = list(map(int, open('input.in').read().split('\n')))
 adapters.sort()
 adapters = [0]+adapters+[adapters[-1]+3]
-alll = set(adapters)
+all_adapters = set(adapters)
 print(adapters)
 ones = 0
 threes = 0
@@ -15,30 +15,25 @@ for i in range(1,len(adapters)):
     if diff == 1:
         ones +=1
     elif diff == 3:
-        print(adapters[i-1], adapters[i])
+        # print(adapters[i-1], adapters[i])
         needed.add(adapters[i-1])
         needed.add(adapters[i])
         threes +=1
-print(ones * threes, ones, threes)
+print('Part1',ones * threes, ones, threes)
 
-print(needed, alll, alll-needed)
-optionals = sorted(list(alll-needed))
+# print(needed, all_adapters, all_adapters-needed)
+optionals = sorted(list(all_adapters-needed))
+#one-liner from Stackoverflow to split list when consecutive entrees are greater than 1 apart
 split = [list(map(itemgetter(1), g)) for k, g in groupby(enumerate(optionals), lambda x: x[0]-x[1])]
-print(split)
+
 total = 1
 for i in split:
     if len(i)==3:
-
-        total *=7
+        total *=7  #7 possible ways to get between two needed adapters with 3 adapters inbetween
     else:
-        print(total, 2**len(i),i,len(i))
         total *= (2**(len(i)))
 print(total)
-# 1,2,3,4,5
-# all
-# -1
-# -2
-# -3 
+
 
 # 0,1,f           1 = 2^0
 # 0,1,2,f         2 = 2 ^1
